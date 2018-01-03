@@ -30,7 +30,12 @@ namespace weChat_Jump
                     {
                         File.Delete(PhoneProcessor.filename);
                     }
-                    PhoneProcessor.GetPhoneScreen();
+                    while (!File.Exists(PhoneProcessor.filename))
+                    {
+                        PhoneProcessor.GetPhoneScreen();
+                        Thread.Sleep(1000);
+                    }
+                    
                     var ip = new ImageProcessor(PhoneProcessor.filename);
                     int x1, x2, y1, y2;
                     try
@@ -48,7 +53,7 @@ namespace weChat_Jump
                 }
                 catch(Exception ex)
                 {
-                    throw ex;
+                    Console.WriteLine("出现错误：" + ex.ToString());
                 }
             }
         }
